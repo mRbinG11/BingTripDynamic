@@ -4,8 +4,8 @@ import config from "../conf/index.js";
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
-  let city = search.split("=").pop();
-  return city;
+  let params = new URLSearchParams(search);
+  return params.get('city');
 }
 
 //Implementation of fetch call with a paramterized input based on city
