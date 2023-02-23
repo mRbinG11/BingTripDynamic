@@ -1,39 +1,81 @@
-
 import config from "../conf/index.js";
 
 //Implementation to extract city from query params
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
-
+  let city = search.split("=").pop();
+  return city;
 }
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
-
+  try {
+    let response = await fetch(
+      config.backendEndpoint + "/adventures?city=" + city
+    );
+    let json = await response.json();
+    return json;
+  } catch (err) {
+    return null;
+  }
 }
 
 //Implementation of DOM manipulation to add adventures for the given city from list of adventures
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
-
+  let dataDiv = document.getElementById("data");
+  adventures.forEach((element) => {
+    let { id, category, image, name, costPerHead, duration } = element;
+    let card = document.createElement("div");
+    card.setAttribute("class", "col-6 col-lg-3 mb-3");
+    card.innerHTML = `<a href="detail/?adventure=${id}" id=${id}>
+      <div class="activity-card">
+        <div class="category-banner">
+          ${category}
+        </div>
+        <img
+          src="${image}"
+          class="activity-card-image"
+          alt="${name}"
+        />
+        <div
+          class="d-md-flex mt-3"
+        >
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex justify-content-between w-100">
+                <p>${name}</p>
+                <p>₹${costPerHead}</p>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex justify-content-between w-100">
+                <p>Duration</p>
+                <p>${duration} hours</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>`;
+    dataDiv.appendChild(card);
+  });
 }
 
 //Implementation of filtering by duration which takes in a list of adventures, the lower bound and upper bound of duration and returns a filtered list of adventures.
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
-
 }
 
 //Implementation of filtering by category which takes in a list of adventures, list of categories to be filtered upon and returns a filtered list of adventures.
 function filterByCategory(list, categoryList) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on their Category and return filtered list
-
 }
 
 // filters object looks like this filters = { duration: "", category: [] };
@@ -47,7 +89,6 @@ function filterFunction(list, filters) {
   // TODO: MODULE_FILTERS
   // 1. Handle the 3 cases detailed in the comments above and return the filtered list of adventures
   // 2. Depending on which filters are needed, invoke the filterByDuration() and/or filterByCategory() methods
-
 
   // Place holder for functionality to work in the Stubs
   return list;
@@ -66,7 +107,6 @@ function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
 
-
   // Place holder for functionality to work in the Stubs
   return null;
 }
@@ -78,7 +118,6 @@ function getFiltersFromLocalStorage() {
 function generateFilterPillsAndUpdateDOM(filters) {
   // TODO: MODULE_FILTERS
   // 1. Use the filters given as input, update the Duration Filter value and Generate Category Pills
-
 }
 export {
   getCityFromURL,
