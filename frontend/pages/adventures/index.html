@@ -184,6 +184,7 @@
             filters["category"].push(category);
             filters["category"] = filters["category"].filter(onlyUnique);
 
+
             generateFilterPillsAndUpdateDOM(filters);
             let filteredAdventures = filterFunction(adventures, filters);
             addAdventureToDOM(filteredAdventures);
